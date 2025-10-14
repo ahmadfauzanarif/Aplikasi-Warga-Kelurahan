@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Warga</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            padding: 40px;
+            color: #333;
+        }
+
+        .detail-container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 30px;
+        }
+
+        .detail-item {
+            margin-bottom: 15px;
+        }
+
+        .detail-item strong {
+            display: inline-block;
+            width: 150px;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            text-decoration: none;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        .back-link i {
+            margin-right: 5px;
+        }
+
+        .back-link:hover {
+            color: #388e3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="detail-container">
+        <h2>Detail Warga</h2>
+
+        <div class="detail-item">
+            <strong>Nama Lengkap:</strong> {{ warga.nama_lengkap }}
+        </div>
+        <div class="detail-item">
+            <strong>NIK:</strong> {{ warga.nik }}
+        </div>
+        <div class="detail-item">
+            <strong>Alamat:</strong> {{ warga.alamat }}
+        </div>
+        <div class="detail-item">
+            <strong>No Telepon:</strong> {{ warga.no_telepon }}
+        </div>
+        <div class="detail-item">
+            <strong>Tanggal Registrasi:</strong> {{ warga.tanggal_registrasi }}
+        </div>
+        <!-- Tambah field lain jika perlu -->
+        <!-- <div class="detail-item">
+            <strong>Alamat:</strong> {{ warga.alamat }}
+        </div> -->
+
+        <a href="{% url 'warga-list' %}" class="back-link">
+            <i class="fas fa-arrow-left"></i> Kembali ke Daftar
+        </a>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Warga Kelurahan</title>
+
+    <!-- Font Awesome CDN untuk ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            margin: 20px;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        th,
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .aksi-icons a {
+            margin-right: 10px;
+            text-decoration: none;
+            color: #444;
+        }
+
+        .aksi-icons a:hover {
+            color: #007BFF;
+        }
+
+        .fa-edit:hover {
+            color: #28a745;
+        }
+
+        .fa-eye:hover {
+            color: #17a2b8;
+        }
+
+        .fa-trash:hover {
+            color: #dc3545;
+        }
+
+        .empty-message {
+            text-align: center;
+            color: #777;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Daftar Warga</h1>
+
+    {% if object_list %}
+    <table>
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Nama Lengkap</th>
+                <th>NIK</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for warga in object_list %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ warga.nama_lengkap }}</td>
+                <td>{{ warga.nik }}</td>
+                <td class="aksi-icons">
+                    <a href="{% url 'warga-detail' warga.id %}" title="Lihat Detail">
+                        <i class="fas fa-eye"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="empty-message">
+        Belum ada data warga yang terdaftar.
+    </div>
+    {% endif %}
+</body>
+
+</html>
