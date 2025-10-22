@@ -16,7 +16,7 @@
         }
 
         .container {
-            max-width: 700px;
+            max-width: 900px;
             margin: auto;
             background-color: #fff;
             padding: 30px;
@@ -27,45 +27,51 @@
         h2 {
             text-align: center;
             color: #4CAF50;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
-        ul {
-            list-style: none;
-            padding: 0;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
         }
 
-        li {
-            background-color: #f4f4f4;
-            margin-bottom: 10px;
-            padding: 15px;
-            border-radius: 8px;
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px 12px;
+            text-align: left;
         }
 
-        li strong {
-            color: #333;
+        th {
+            background-color: #4CAF50;
+            color: white;
         }
 
-        .status {
-            font-size: 0.9em;
-            color: #888;
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
         }
 
-        .back-link {
-            display: block;
-            text-align: center;
-            margin-top: 30px;
+        .btn-tambah {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 6px;
             text-decoration: none;
-            color: #4CAF50;
             font-weight: bold;
         }
 
-        .back-link i {
+        .btn-tambah i {
             margin-right: 5px;
         }
 
-        .back-link:hover {
-            color: #388e3c;
+        .aksi {
+            text-align: center;
+        }
+
+        .aksi i {
+            color: #555;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -73,23 +79,40 @@
     <div class="container">
         <h2>Daftar Semua Pengaduan</h2>
 
-        <ul>
-            {% for aduan in pengaduan_list %}
-                <li>
-                    <strong>{{ aduan.judul }}</strong>
-                    <span class="status">(Status: {{ aduan.get_status_display }})</span>
-                    <p>{{ aduan.deskripsi }}</p>
-                    <p><i class="fas fa-user"></i> Pelapor: {{ aduan.pelapor.nama_lengkap }}</p>
-                    <p><i class="fas fa-calendar"></i> {{ aduan.tanggal_lapor|date:"d M Y H:i" }}</p>
-                </li>
-            {% empty %}
-                <li>Tidak ada pengaduan yang tersedia.</li>
-            {% endfor %}
-        </ul>
-
-        <a href="{% url 'warga-list' %}" class="back-link">
-            <i class="fas fa-arrow-left"></i> Kembali ke Daftar Warga
+        <a href="{% url 'pengaduan-tambah' %}" class="btn-tambah">
+            <i class="fas fa-plus"></i> Tambah Pengaduan Baru
         </a>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Judul</th>
+                    <th>Pelapor</th>
+                    <th>Status</th>
+                    <th>Tanggal Lapor</th>
+                    <th class="aksi">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for aduan in pengaduan_list %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ aduan.judul }}</td>
+                    <td>{{ aduan.pelapor.nama_lengkap }}</td>
+                    <td>{{ aduan.get_status_display }}</td>
+                    <td>{{ aduan.tanggal_lapor|date:"d M Y H:i" }}</td>
+                    <td class="aksi">
+                        <i class="fas fa-edit"></i>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" style="text-align:center;">Belum ada pengaduan.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </body>
 </html>

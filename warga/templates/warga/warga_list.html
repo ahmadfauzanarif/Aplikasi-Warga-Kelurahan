@@ -1,95 +1,146 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Pengaduan</title>
+    <title>Daftar Warga</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
-
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f9f9f9;
+            background-color: #f0f4f8;
             padding: 40px;
             color: #333;
         }
 
         .container {
-            max-width: 700px;
+            max-width: 800px;
             margin: auto;
-            background-color: #fff;
+            background: #fff;
             padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
         }
 
-        h2 {
+        h1 {
             text-align: center;
             color: #4CAF50;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
-        ul {
-            list-style: none;
-            padding: 0;
+        .btn-container {
+            display: inline-block;
+            justify-content: flex-end;
+            margin-bottom: 15px;
         }
 
-        li {
-            background-color: #f4f4f4;
-            margin-bottom: 10px;
-            padding: 15px;
-            border-radius: 8px;
-        }
-
-        li strong {
-            color: #333;
-        }
-
-        .status {
-            font-size: 0.9em;
-            color: #888;
-        }
-
-        .back-link {
-            display: block;
-            text-align: center;
-            margin-top: 30px;
-            text-decoration: none;
-            color: #4CAF50;
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 14px;
             font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.3s ease;
         }
 
-        .back-link i {
-            margin-right: 5px;
+        .btn i {
+            margin-right: 6px;
         }
 
-        .back-link:hover {
+        .btn:hover {
+            background-color: #43a047;
+            transform: translateY(-2px);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f8e9;
+        }
+
+        .aksi {
+            text-align: center;
+        }
+
+        .aksi a {
+            color: #4CAF50;
+            font-size: 18px;
+            text-decoration: none;
+        }
+
+        .aksi a:hover {
             color: #388e3c;
+        }
+
+        .no-data {
+            text-align: center;
+            color: #777;
+            font-style: italic;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Daftar Semua Pengaduan</h2>
+        <h1>Daftar Warga</h1>
 
-        <ul>
-            {% for aduan in pengaduan_list %}
-                <li>
-                    <strong>{{ aduan.judul }}</strong>
-                    <span class="status">(Status: {{ aduan.get_status_display }})</span>
-                    <p>{{ aduan.deskripsi }}</p>
-                    <p><i class="fas fa-user"></i> Pelapor: {{ aduan.pelapor.nama_lengkap }}</p>
-                    <p><i class="fas fa-calendar"></i> {{ aduan.tanggal_lapor|date:"d M Y H:i" }}</p>
-                </li>
-            {% empty %}
-                <li>Tidak ada pengaduan yang tersedia.</li>
-            {% endfor %}
-        </ul>
+        <div class="btn-container">
+            <a href="{% url 'warga-tambah' %}" class="btn">
+                <i class="fa-solid fa-user-plus"></i> Tambah Warga Baru
+            </a>
+        </div>
 
-        <a href="{% url 'warga-list' %}" class="back-link">
-            <i class="fas fa-arrow-left"></i> Kembali ke Daftar Warga
-        </a>
+        <table>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Nama Lengkap</th>
+                    <th>NIK</th>
+                    <th class="aksi">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for warga in object_list %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ warga.nama_lengkap }}</td>
+                        <td>{{ warga.nik }}</td>
+                        <td class="aksi">
+                            <a href="{% url 'warga-detail' warga.pk %}">
+                                <i class="fa-solid fa-eye"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="4" class="no-data">Belum ada data warga yang terdaftar.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </body>
 </html>
