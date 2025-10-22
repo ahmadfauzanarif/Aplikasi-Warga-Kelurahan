@@ -102,9 +102,12 @@
                     <td>{{ aduan.pelapor.nama_lengkap }}</td>
                     <td>{{ aduan.get_status_display }}</td>
                     <td>{{ aduan.tanggal_lapor|date:"d M Y H:i" }}</td>
-                    <td class="aksi">
-                        <i class="fas fa-edit"></i>
+                    <td>
+                        <a href="{% url 'pengaduan-detail' aduan.pk %}" title="Lihat Detail">
+                            <i class="fa-solid fa-eye" style="color:#4e73df;"></i>
+                        </a>
                     </td>
+
                 </tr>
                 {% empty %}
                 <tr>

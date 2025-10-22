@@ -1,98 +1,143 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Warga</title>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+    <title>Detail Warga - {{ warga.nama_lengkap }}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f9f9f9;
-            padding: 40px;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 30px 40px;
+            border-radius: 14px;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
             color: #333;
-        }
-
-        .detail-container {
-            max-width: 600px;
-            margin: auto;
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        h2 {
-            text-align: center;
-            color: #4CAF50;
-            margin-bottom: 30px;
-        }
-
-        .detail-item {
             margin-bottom: 15px;
         }
 
-        .detail-item strong {
-            display: inline-block;
-            width: 150px;
+        h1 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .back-link {
-            display: block;
-            text-align: center;
-            margin-top: 30px;
+        h1 i {
+            color: #4e73df;
+        }
+
+        .action-buttons {
+            margin-bottom: 25px;
+        }
+
+        .action-buttons a {
             text-decoration: none;
-            color: #4CAF50;
-            font-weight: bold;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .back-link i {
-            margin-right: 5px;
+        .edit-btn {
+            background-color: #4e73df;
+            color: white;
         }
 
-        .back-link:hover {
-            color: #388e3c;
+        .edit-btn:hover {
+            background-color: #375ac3;
         }
 
-        /* --- Tambahan untuk bagian pengaduan --- */
+        .delete-btn {
+            background-color: #e74a3b;
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .detail-item {
+            margin-bottom: 10px;
+            font-size: 1.05em;
+        }
+
+        .detail-item strong {
+            color: #555;
+            display: inline-block;
+            width: 180px;
+        }
+
         hr {
-            margin: 40px 0 20px;
-            border: 0;
-            border-top: 2px solid #eee;
+            margin: 25px 0;
+            border: none;
+            height: 1px;
+            background-color: #ddd;
         }
 
-        ul.pengaduan-list {
+        .pengaduan-list {
             list-style: none;
             padding: 0;
         }
 
-        ul.pengaduan-list li {
-            background-color: #f4f4f4;
-            margin-bottom: 10px;
-            padding: 15px;
+        .pengaduan-list li {
+            background: #f8f9fc;
+            border-left: 5px solid #4e73df;
+            margin-bottom: 12px;
+            padding: 12px 15px;
             border-radius: 8px;
         }
 
-        ul.pengaduan-list li strong {
-            color: #333;
-        }
-
-        ul.pengaduan-list li p {
-            margin-top: 5px;
-            color: #555;
+        .pengaduan-list li strong {
+            font-size: 1.1em;
         }
 
         .status {
             font-size: 0.9em;
-            color: #888;
+            color: #6c757d;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #4e73df;
+            font-weight: 600;
+            margin-top: 25px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <div class="detail-container">
-        <h2>Detail Warga</h2>
+    <div class="container">
+        <h1><i class="fa-solid fa-id-card"></i> Detail Warga</h1>
+
+        <div class="action-buttons">
+            <a href="{% url 'warga-edit' warga.pk %}" class="edit-btn">
+                <i class="fa-solid fa-pen-to-square"></i> Edit Data
+            </a>
+            <a href="{% url 'warga-hapus' warga.pk %}" class="delete-btn">
+                <i class="fa-solid fa-trash"></i> Hapus Data
+            </a>
+        </div>
 
         <div class="detail-item">
             <strong>Nama Lengkap:</strong> {{ warga.nama_lengkap }}
@@ -110,10 +155,9 @@
             <strong>Tanggal Registrasi:</strong> {{ warga.tanggal_registrasi }}
         </div>
 
-        <!-- ============================== -->
-        <!-- Bagian Daftar Pengaduan -->
         <hr>
-        <h2>Daftar Pengaduan oleh {{ warga.nama_lengkap }}</h2>
+
+        <h2><i class="fa-solid fa-comments"></i> Daftar Pengaduan oleh {{ warga.nama_lengkap }}</h2>
 
         <ul class="pengaduan-list">
             {% for aduan in warga.pengaduan.all %}
@@ -126,12 +170,10 @@
                 <li>Warga ini belum pernah membuat pengaduan.</li>
             {% endfor %}
         </ul>
-        <!-- ============================== -->
 
         <a href="{% url 'warga-list' %}" class="back-link">
-            <i class="fas fa-arrow-left"></i> Kembali ke Daftar
+            <i class="fa-solid fa-arrow-left"></i> Kembali ke Daftar Warga
         </a>
-
     </div>
 </body>
 </html>

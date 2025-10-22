@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail Pengaduan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f8;
+            padding: 50px;
+        }
+
+        .container {
+            max-width: 700px;
+            background: #fff;
+            margin: auto;
+            padding: 30px 40px;
+            border-radius: 14px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #4e73df;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .detail-item {
+            margin-bottom: 15px;
+        }
+
+        .detail-item strong {
+            display: inline-block;
+            width: 150px;
+            color: #555;
+        }
+
+        .buttons {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .buttons a {
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            color: #fff;
+            margin: 0 5px;
+        }
+
+        .btn-edit {
+            background-color: #4e73df;
+        }
+
+        .btn-edit:hover {
+            background-color: #375ab7;
+        }
+
+        .btn-delete {
+            background-color: #e74a3b;
+        }
+
+        .btn-delete:hover {
+            background-color: #c0392b;
+        }
+
+        .btn-back {
+            background-color: #6c757d;
+        }
+
+        .btn-back:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Detail Pengaduan</h2>
+
+        <div class="detail-item">
+            <strong>Judul:</strong> {{ pengaduan.judul }}
+        </div>
+        <div class="detail-item">
+            <strong>Deskripsi:</strong> {{ pengaduan.deskripsi }}
+        </div>
+        <div class="detail-item">
+            <strong>Status:</strong> {{ pengaduan.get_status_display }}
+        </div>
+        <div class="detail-item">
+            <strong>Tanggal Lapor:</strong> {{ pengaduan.tanggal_lapor|date:"d M Y H:i" }}
+        </div>
+        <div class="detail-item">
+            <strong>Pelapor:</strong> {{ pengaduan.pelapor.nama_lengkap }}
+        </div>
+
+        <div class="buttons">
+            <a href="{% url 'pengaduan-edit' pengaduan.pk %}" class="btn-edit">
+                <i class="fa-solid fa-pen-to-square"></i> Edit
+            </a>
+            <a href="{% url 'pengaduan-hapus' pengaduan.pk %}" class="btn-delete">
+                <i class="fa-solid fa-trash"></i> Hapus
+            </a>
+            <a href="{% url 'pengaduan-list' %}" class="btn-back">
+                <i class="fa-solid fa-arrow-left"></i> Kembali
+            </a>
+        </div>
+    </div>
+</body>
+</html>
