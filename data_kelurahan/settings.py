@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     # "unfold.contrib.location_field",  # optional, if django-location-field package is used
     # "unfold.contrib.constance",  # optional, if django-constance package is used
     'warga',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

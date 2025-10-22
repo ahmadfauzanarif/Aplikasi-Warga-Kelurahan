@@ -7,6 +7,8 @@ from django.views.generic import UpdateView
 from django.views.generic import DeleteView
 from .models import Warga,Pengaduan
 from .forms import WargaForm, PengaduanForm
+from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView
+from .serializers import WargaSerializer
 # Create your views here.
 
 
@@ -63,3 +65,16 @@ class PengaduanDetailView(DetailView):
     model = Pengaduan
     template_name = 'warga/pengaduan_detail.html'
     context_object_name = 'pengaduan'
+
+# --- API VIEWS ---
+class WargaListAPIView(ListAPIView):
+    queryset = Warga.objects.all()
+    serializer_class = WargaSerializer
+
+class WargaCreateAPIView(CreateAPIView):
+    queryset = Warga.objects.all()
+    serializer_class = WargaSerializer
+
+class WargaDetailAPIView(RetrieveAPIView):
+    queryset = Warga.objects.all()
+    serializer_class = WargaSerializer
