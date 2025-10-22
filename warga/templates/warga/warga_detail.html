@@ -55,6 +55,39 @@
         .back-link:hover {
             color: #388e3c;
         }
+
+        /* --- Tambahan untuk bagian pengaduan --- */
+        hr {
+            margin: 40px 0 20px;
+            border: 0;
+            border-top: 2px solid #eee;
+        }
+
+        ul.pengaduan-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul.pengaduan-list li {
+            background-color: #f4f4f4;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        ul.pengaduan-list li strong {
+            color: #333;
+        }
+
+        ul.pengaduan-list li p {
+            margin-top: 5px;
+            color: #555;
+        }
+
+        .status {
+            font-size: 0.9em;
+            color: #888;
+        }
     </style>
 </head>
 <body>
@@ -76,10 +109,24 @@
         <div class="detail-item">
             <strong>Tanggal Registrasi:</strong> {{ warga.tanggal_registrasi }}
         </div>
-        <!-- Tambah field lain jika perlu -->
-        <!-- <div class="detail-item">
-            <strong>Alamat:</strong> {{ warga.alamat }}
-        </div> -->
+
+        <!-- ============================== -->
+        <!-- Bagian Daftar Pengaduan -->
+        <hr>
+        <h2>Daftar Pengaduan oleh {{ warga.nama_lengkap }}</h2>
+
+        <ul class="pengaduan-list">
+            {% for aduan in warga.pengaduan.all %}
+                <li>
+                    <strong>{{ aduan.judul }}</strong>
+                    <span class="status">(Status: {{ aduan.get_status_display }})</span>
+                    <p>{{ aduan.deskripsi }}</p>
+                </li>
+            {% empty %}
+                <li>Warga ini belum pernah membuat pengaduan.</li>
+            {% endfor %}
+        </ul>
+        <!-- ============================== -->
 
         <a href="{% url 'warga-list' %}" class="back-link">
             <i class="fas fa-arrow-left"></i> Kembali ke Daftar
