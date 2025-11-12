@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'drf_spectacular', # Tambahkan ini
+    'corsheaders',
     'unfold',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -59,10 +61,13 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ],
     'EXCEPTION_HANDLER': 'warga.exceptions.custom_exception_handler',
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema', # Tambahkan ini
+
 }
 
 
 MIDDLEWARE = [
+     'corsheaders.middleware.CorsMiddleware',  # <--- tambahkan ini
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -143,3 +148,21 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# CORS settings
+CORS_ALLOW_ALL_ORIGINS = True  # Izinkan semua origin (untuk development)
+
+# --- ATAU kalau mau lebih aman ---
+# CORS_ALLOWED_ORIGINS = [
+#     "http://127.0.0.1:5500",  # misalnya tempat kamu buka file Bootstrap
+#     "http://localhost:5500",
+# ]
+
+
+# data_kelurahan/settings.py
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'API Aplikasi Warga Kelurahan',
+    'DESCRIPTION': 'Dokumentasi API untuk mengelola data warga dan pengaduan.',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+}
